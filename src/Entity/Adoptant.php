@@ -6,7 +6,7 @@ use App\Repository\AdoptantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdoptantRepository::class)]
-class Adoptant
+class Adoptant extends Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

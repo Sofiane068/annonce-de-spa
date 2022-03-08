@@ -6,7 +6,7 @@ use App\Repository\SpaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SpaRepository::class)]
-class Spa
+class Spa extends Utilisateur 
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
