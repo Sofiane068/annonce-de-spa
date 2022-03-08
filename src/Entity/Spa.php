@@ -6,13 +6,8 @@ use App\Repository\SpaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SpaRepository::class)]
-class Spa extends Utilisateur 
+class Spa extends Utilisateur
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $nomAssociation;
 
@@ -21,11 +16,6 @@ class Spa extends Utilisateur
 
     #[ORM\Column(type: 'integer')]
     private $nombreAnnoncePourvues;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNomAssociation(): ?string
     {

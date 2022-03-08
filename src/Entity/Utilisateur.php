@@ -6,18 +6,25 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
+#[ORM\InheritanceType("JOINED")]
+#[ORM\DiscriminatorColumn(name: "discr", type: "string")]
+#[ORM\DiscriminatorMap([
+    "spa" => "Spa",
+    "administateur" => "Administrateur",
+    "adoptant" => "Adoptant",
+])]
 class Utilisateur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    protected $id;
 
     #[ORM\Column(type: 'string', length: 50)]
-    private $mail;
+    protected $mail;
 
     #[ORM\Column(type: 'string', length: 50)]
-    private $motDePasse;
+    protected $motDePasse;
 
     public function getId(): ?int
     {

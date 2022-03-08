@@ -8,11 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: AdoptantRepository::class)]
 class Adoptant extends Utilisateur
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private $id;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $telephone;
 
@@ -27,11 +22,6 @@ class Adoptant extends Utilisateur
 
     #[ORM\Column(type: 'string', length: 255)]
     private $prenom;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getTelephone(): ?string
     {
