@@ -30,6 +30,9 @@ class Annonce
     #[ORM\OneToMany(mappedBy: 'annonce', targetEntity: Chien::class)]
     private $chiens;
 
+    #[ORM\ManyToOne(targetEntity: Spa::class, inversedBy: 'annonce')]
+    private $spa;
+
     public function __construct()
     {
         $this->chiens = new ArrayCollection();
@@ -114,6 +117,18 @@ class Annonce
                 $chien->setAnnonce(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSpa(): ?Spa
+    {
+        return $this->spa;
+    }
+
+    public function setSpa(?Spa $spa): self
+    {
+        $this->spa = $spa;
 
         return $this;
     }
