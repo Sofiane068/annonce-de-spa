@@ -28,9 +28,13 @@ class Adoptant extends Utilisateur
     #[ORM\OneToMany(mappedBy: 'Adoptant', targetEntity: Chien::class)]
     private $chiens;
 
+    #[ORM\OneToMany(mappedBy: 'adoptant', targetEntity: DemandeAdoption::class)]
+    private $demandeAdoptions;
+
     public function __construct()
     {
         $this->chiens = new ArrayCollection();
+        $this->demandeAdoptions = new ArrayCollection();
     }
 
     public function getTelephone(): ?string
@@ -117,6 +121,36 @@ class Adoptant extends Utilisateur
             // set the owning side to null (unless already changed)
             if ($chien->getAdoptant() === $this) {
                 $chien->setAdoptant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DemandeAdoption>
+     */
+    public function getDemandeAdoptions(): Collection
+    {
+        return $this->demandeAdoptions;
+    }
+
+    public function addDemandeAdoption(DemandeAdoption $demandeAdoption): self
+    {
+        if (!$this->demandeAdoptions->contains($demandeAdoption)) {
+            $this->demandeAdoptions[] = $demandeAdoption;
+            $demandeAdoption->setAdoptant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeAdoption(DemandeAdoption $demandeAdoption): self
+    {
+        if ($this->demandeAdoptions->removeElement($demandeAdoption)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeAdoption->getAdoptant() === $this) {
+                $demandeAdoption->setAdoptant(null);
             }
         }
 
