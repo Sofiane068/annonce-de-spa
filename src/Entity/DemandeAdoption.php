@@ -24,9 +24,16 @@ class DemandeAdoption
     #[ORM\ManyToMany(targetEntity: Chien::class, mappedBy: 'demandeAdoption')]
     private $chiens;
 
+    #[ORM\ManyToOne(targetEntity: Adoptant::class, inversedBy: 'demandeAdoptions')]
+    private $adoptant;
+
+    #[ORM\OneToMany(mappedBy: 'demandeAdoption', targetEntity: Message::class)]
+    private $message;
+
     public function __construct()
     {
         $this->chiens = new ArrayCollection();
+        $this->message = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -80,6 +87,48 @@ class DemandeAdoption
     {
         if ($this->chiens->removeElement($chien)) {
             $chien->removeDemandeAdoption($this);
+        }
+
+        return $this;
+    }
+
+    public function getAdoptant(): ?Adoptant
+    {
+        return $this->adoptant;
+    }
+
+    public function setAdoptant(?Adoptant $adoptant): self
+    {
+        $this->adoptant = $adoptant;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessage(): Collection
+    {
+        return $this->message;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->message->contains($message)) {
+            $this->message[] = $message;
+            $message->setDemandeAdoption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->message->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getDemandeAdoption() === $this) {
+                $message->setDemandeAdoption(null);
+            }
         }
 
         return $this;

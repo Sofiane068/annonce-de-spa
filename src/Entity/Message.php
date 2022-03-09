@@ -19,6 +19,9 @@ class Message
     #[ORM\Column(type: 'boolean')]
     private $repondu;
 
+    #[ORM\ManyToOne(targetEntity: DemandeAdoption::class, inversedBy: 'message')]
+    private $demandeAdoption;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Message
     public function setRepondu(bool $repondu): self
     {
         $this->repondu = $repondu;
+
+        return $this;
+    }
+
+    public function getDemandeAdoption(): ?DemandeAdoption
+    {
+        return $this->demandeAdoption;
+    }
+
+    public function setDemandeAdoption(?DemandeAdoption $demandeAdoption): self
+    {
+        $this->demandeAdoption = $demandeAdoption;
 
         return $this;
     }
