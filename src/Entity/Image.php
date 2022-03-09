@@ -16,6 +16,10 @@ class Image
     #[ORM\Column(type: 'string', length: 255)]
     private $nom;
 
+    #[ORM\ManyToOne(targetEntity: Chien::class, inversedBy: 'images')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $chien;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class Image
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getChien(): ?Chien
+    {
+        return $this->chien;
+    }
+
+    public function setChien(?Chien $chien): self
+    {
+        $this->chien = $chien;
 
         return $this;
     }
