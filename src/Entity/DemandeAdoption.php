@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DemandeAdoptionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DemandeAdoptionRepository::class)]
@@ -18,6 +20,14 @@ class DemandeAdoption
 
     #[ORM\Column(type: 'datetime')]
     private $dateEmission;
+
+    #[ORM\ManyToMany(targetEntity: Chien::class, mappedBy: 'demandeAdoption')]
+    private $chiens;
+
+    public function __construct()
+    {
+        $this->chiens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +54,33 @@ class DemandeAdoption
     public function setDateEmission(\DateTimeInterface $dateEmission): self
     {
         $this->dateEmission = $dateEmission;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chien>
+     */
+    public function getChiens(): Collection
+    {
+        return $this->chiens;
+    }
+
+    public function addChien(Chien $chien): self
+    {
+        if (!$this->chiens->contains($chien)) {
+            $this->chiens[] = $chien;
+            $chien->addDemandeAdoption($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChien(Chien $chien): self
+    {
+        if ($this->chiens->removeElement($chien)) {
+            $chien->removeDemandeAdoption($this);
+        }
 
         return $this;
     }
