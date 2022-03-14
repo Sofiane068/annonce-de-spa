@@ -34,7 +34,7 @@ class UtilisateurFixtures extends Fixture
                 $utilisateur->setNom('adoptant' . $i);
                 $utilisateur->setPrenom($i . 'adoptant' . $i);
                 $utilisateur->setDepartement(rand(10, 69));
-                $utilisateur->setVille($tabVille[rand(0, count($tabVille))]);
+                $utilisateur->setVille($tabVille[rand(0, count($tabVille)-1)]);
                 $utilisateur->setTelephone('0615' . $i . '8749');
             } elseif ($i % 3 == 2) {
                 $utilisateur = new Spa();
