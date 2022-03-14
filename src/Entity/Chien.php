@@ -36,7 +36,7 @@ class Chien
     #[ORM\Column(type: 'boolean')]
     private $adopter;
 
-    #[ORM\OneToMany(mappedBy: 'chien', targetEntity: image::class)]
+    #[ORM\OneToMany(mappedBy: 'chien', targetEntity: Image::class)]
     private $images;
 
     #[ORM\ManyToMany(targetEntity: Race::class, inversedBy: 'chiens')]
@@ -149,14 +149,14 @@ class Chien
     }
 
     /**
-     * @return Collection<int, image>
+     * @return Collection<int, Image>
      */
     public function getImages(): Collection
     {
         return $this->images;
     }
 
-    public function addImage(image $image): self
+    public function addImage(Image $image): self
     {
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
@@ -166,7 +166,7 @@ class Chien
         return $this;
     }
 
-    public function removeImage(image $image): self
+    public function removeImage(Image $image): self
     {
         if ($this->images->removeElement($image)) {
             // set the owning side to null (unless already changed)
