@@ -16,6 +16,8 @@ class MessageFixtures extends Fixture
         $this->demandeAdoptionRepository = $demandeAdoptionRepository;
     }
 
+ 
+
     public function load(ObjectManager $manager)
     {
         $tabMessage = [
@@ -31,9 +33,12 @@ class MessageFixtures extends Fixture
             'jadore ce chien, serait il disponible ?'
         ];
 
+         $demandeAdoptions= $this->demandeAdoptionRepository->findAll();
+
         for ($i = 0; $i < 10; $i++) {
             $message = new Message();
             $message->setTexte($tabMessage[$i]);
+            $message->setDemandeAdoption($demandeAdoptions[$i]);
             $message->setRepondu((bool) mt_rand(0, 1));
             $manager->persist($message);
         }
