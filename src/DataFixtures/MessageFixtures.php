@@ -3,13 +3,17 @@
 namespace App\DataFixtures;
 
 use App\Entity\Message;
+use App\Repository\DemandeAdoptionRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class MessageFixtures extends Fixture
 {
-    public function __construct()
+    protected DemandeAdoptionRepository $demandeAdoptionRepository;
+
+    public function __construct(DemandeAdoptionRepository $demandeAdoptionRepository)
     {
+        $this->demandeAdoptionRepository = $demandeAdoptionRepository;
     }
 
     public function load(ObjectManager $manager)
@@ -34,5 +38,12 @@ class MessageFixtures extends Fixture
             $manager->persist($message);
         }
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            DemandeAdoptionFixtures::class
+        ];
     }
 }
