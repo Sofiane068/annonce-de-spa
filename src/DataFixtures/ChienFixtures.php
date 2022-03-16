@@ -4,6 +4,8 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Chien;
+use App\Repository\AdoptantRepository;
+use App\Repository\AnnonceRepository;
 use App\Repository\RaceRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -12,10 +14,14 @@ use Doctrine\Persistence\ObjectManager;
 class ChienFixtures extends Fixture implements DependentFixtureInterface
 {
     protected RaceRepository $raceRepository;
+    protected AdoptantRepository $adoptantRepository;
+    protected AnnonceRepository $annonceRepository;
 
-    public function __construct(RaceRepository $raceRepository)
+    public function __construct(RaceRepository $raceRepository, AdoptantRepository $adoptantRepository, AnnonceRepository $annonceRepository)
     {
         $this->raceRepository = $raceRepository;
+        $this->adoptantRepository = $adoptantRepository;
+        $this->annonceRepository = $annonceRepository;
     }
 
     public function load(ObjectManager $manager)
@@ -29,6 +35,8 @@ class ChienFixtures extends Fixture implements DependentFixtureInterface
         $tabAdopter = [false,true,false,false,true,false,false,false,true,false];
 
         $races = $this->raceRepository->findAll();
+        $adoptants = $this->adoptantRepository->findAll();
+        $annonces= $this->annonceRepository->findAll();
 
         for ($i=0; $i < count($tabNom) - 1; $i++) { 
             $chien = new Chien();
@@ -43,6 +51,8 @@ class ChienFixtures extends Fixture implements DependentFixtureInterface
             if ($tabChienCroises[$i]) {
                 $chien->addRace($races[mt_rand(0 , count($races) - 1)]);
             }
+            $chien->setAdoptant($adoptants[mt_rand(0,count($adoptants)-1)]);
+            $chien->setAnnonce($annonces[mt_rand(0, count($annonces) - 1)]);
             $manager->persist($chien);
         }
 
@@ -54,6 +64,8 @@ class ChienFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             RaceFixtures::class,
+            UtilisateurFixtures::class,
+            AnnonceFixtures::class
         ];
     }
 }

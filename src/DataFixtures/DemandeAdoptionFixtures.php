@@ -15,7 +15,7 @@ class DemandeAdoptionFixtures extends Fixture implements DependentFixtureInterfa
     protected $ChienRepository;
     protected $AdoptantRepository;
 
-    public function __construct( ChienRepository $ChienRepository, AdoptantRepository $AdoptantRepository)
+    public function __construct(ChienRepository $ChienRepository, AdoptantRepository $AdoptantRepository)
     {
         $this->ChienRepository = $ChienRepository;
         $this->AdoptantRepository = $AdoptantRepository;
@@ -23,19 +23,17 @@ class DemandeAdoptionFixtures extends Fixture implements DependentFixtureInterfa
 
     public function load(ObjectManager $manager)
     {
-        $messages = $this->MessageRepository->findAll();
-        $chiens= $this->ChienRepository->findAll();
-        $adoptants= $this->AdoptantRepository->findAll();
+        $chiens = $this->ChienRepository->findAll();
+        $adoptants = $this->AdoptantRepository->findAll();
 
         $int = rand(1646223317, 1646923317);
-
+        $randomNumber = mt_rand(1, 2);
         for ($i = 0; $i < 10; $i++) {
             $demandeAdoption = new DemandeAdoption();
             $demandeAdoption->setValider((bool) mt_rand(0, 1));
             $demandeAdoption->setDateEmission(new DateTime(date("Y-m-d", $int)));
-            $randomNumber = mt_rand(0, count($messages) - 1);
             $demandeAdoption->addChien($chiens[$randomNumber]);
-            $demandeAdoption->setAdoptant($adoptants[$randomNumber]);
+            $demandeAdoption->setAdoptant($adoptants[mt_rand(0,count($adoptants)-1)]);
             $manager->persist($demandeAdoption);
         }
         $manager->flush();
@@ -45,7 +43,7 @@ class DemandeAdoptionFixtures extends Fixture implements DependentFixtureInterfa
     public function getDependencies()
     {
         return [
-            AdoptantFixtures::class,
+            UtilisateurFixtures::class,
             ChienFixtures::class
         ];
     }

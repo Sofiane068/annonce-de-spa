@@ -8,24 +8,20 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Annonce;
-use App\Repository\ChienRepository;
 use DateTime;
 
 class AnnonceFixtures extends Fixture implements DependentFixtureInterface
 {
     protected SpaRepository $spaRepository;
-    protected ChienRepository $ChienRepository;
 
-    public function __construct(SpaRepository $spaRepository, ChienRepository $ChienRepository)
+    public function __construct(SpaRepository $spaRepository)
     {
         $this->spaRepository = $spaRepository;
-        $this->ChienRepository = $ChienRepository;
     }
 
     public function load(ObjectManager $manager)
     {
         $spas = $this->spaRepository->findAll();
-        $chiens = $this->ChienRepository->findAll();
 
         for ($i = 0; $i < 10; $i++) {
 
@@ -37,10 +33,8 @@ class AnnonceFixtures extends Fixture implements DependentFixtureInterface
             $annonce->setReponce(rand(0, 1));
             $annonce->setSpa($spas[mt_rand(0, count($spas) - 1)]);
             $randomNumber = mt_rand(1, 2);
-            for ($j = 0; $j < $randomNumber; $j++) {
-                $annonce->addChien($chiens[mt_rand(0, count($chiens) - 1)]);
-            }
-            $annonce->setNombredechien($annonce->getChiens()->count());
+           
+            $annonce->setNombredechien(mt_rand(1, 3));
             $manager->persist($annonce);
         }
 
@@ -51,7 +45,6 @@ class AnnonceFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UtilisateurFixtures::class,
-            ChienFixtures::class
         ];
     }
 }

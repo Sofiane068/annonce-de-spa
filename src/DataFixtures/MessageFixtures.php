@@ -5,9 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Message;
 use App\Repository\DemandeAdoptionRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class MessageFixtures extends Fixture
+class MessageFixtures extends Fixture implements DependentFixtureInterface
 {
     protected DemandeAdoptionRepository $demandeAdoptionRepository;
 
@@ -16,7 +17,7 @@ class MessageFixtures extends Fixture
         $this->demandeAdoptionRepository = $demandeAdoptionRepository;
     }
 
- 
+
 
     public function load(ObjectManager $manager)
     {
@@ -33,12 +34,12 @@ class MessageFixtures extends Fixture
             'jadore ce chien, serait il disponible ?'
         ];
 
-         $demandeAdoptions= $this->demandeAdoptionRepository->findAll();
+        $demandeAdoptions = $this->demandeAdoptionRepository->findAll();
 
         for ($i = 0; $i < 10; $i++) {
             $message = new Message();
             $message->setTexte($tabMessage[$i]);
-            $message->setDemandeAdoption($demandeAdoptions[$i]);
+            $message->setDemandeAdoption($demandeAdoptions[mt_rand(0, count($demandeAdoptions) - 1)]);
             $message->setRepondu((bool) mt_rand(0, 1));
             $manager->persist($message);
         }
