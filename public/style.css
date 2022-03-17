@@ -1,0 +1,15 @@
+#connexion {
+  background-color: rgb(255, 150, 13);
+  color: azure;
+}
+.btn.focus,
+.btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(255, 150, 13, 0.25);
+}
+
+#login {
+  color: rgb(255, 150, 13);
+  border-color: rgb(255, 150, 13);
+  margin-right: 10px;
+}
