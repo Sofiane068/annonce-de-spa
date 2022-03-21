@@ -6,6 +6,7 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 #[ORM\InheritanceType("JOINED")]
@@ -23,12 +24,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     protected $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\Email()]
     protected $mail;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Length(min: 4)]
+    #[Assert\NotBlank()]
     protected $motDePasse;
 
     public function getId(): ?int

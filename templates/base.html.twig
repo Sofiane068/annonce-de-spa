@@ -21,7 +21,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
 						<li class="nav-item active">
-							<a class="nav-link" href="#">Home
+							<a class="nav-link" href="{{ path('app_page_acceuil') }}">Home
 								<span class="sr-only">(current)</span>
 							</a>
 						</li>
@@ -43,11 +43,18 @@
 							<a class="nav-link disabled" href="#">Disabled</a>
 						</li>
 					</ul>
-					<button id="login" class="btn btn-outline my-2 my-sm-0">inscription</button>
+					<a id="login" href="{{ path('app_page_inscription') }}" class="btn btn-outline my-2 my-sm-0">inscription</a>
                     <button id="connexion" class="btn btn my-2 my-sm-0 btn-group-toggle">Connexion</button>
 
 				</div>
 			</nav>
+			{% for type, flashes in app.flashes %}
+				{% for flash in flashes %}
+					<div class="alert alert-{{ type }}" role="alert">
+						{{ flash }}
+					</div>
+				{% endfor %}
+			{% endfor %}
 
 
 			{% block body %}{% endblock %}
