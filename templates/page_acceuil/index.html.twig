@@ -7,77 +7,70 @@
 	<div class="py-5">
 		<div class="container">
 			<div class="row hidden-md-up">
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
-							<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-							<p class="card-text p-y-1">Some quick example text to build on the card title .</p>
-							<a href="#" class="card-link">link</a>
-							<a href="#" class="card-link">Second link</a>
+				{% for annonce in annonces %}
+					<div class="col-md-4">
+						<div class="card">
+							<div class="card-block">
+								<h4 class="card-title">{{annonce.titre}}</h4>
+
+								{% for chien in annonce.chiens %}
+									{% for image in chien.images %}
+										<img class="d-block w-100" src="{{ image.nom }}" alt="First slide">
+									{% endfor %}
+									<h4>
+										{% for race in chien.race %}
+											{{- race.nom -}}
+											{%- if not loop.last -%},
+											{%  endif -%}
+										{% endfor %}
+									</h4>
+
+
+								{% endfor %}
+
+								<h6 class="card-subtitle">
+									<strong>nombre de chien :
+									</strong>
+									{{annonce.nombredechien }}</h6>
+								<br>
+								<h6 class="card-subtitle text-muted">{{annonce.DateDeMiseAjour|date('Y-m-d') }}</h6>
+
+
+								<p class="card-text p-y-1">Some quick example text to build on the card title .</p>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
-							<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-							<p class="card-text p-y-1">Some quick example text to build on the card title .</p>
-							<a href="#" class="card-link">link</a>
-							<a href="#" class="card-link">Second link</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
-							<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-							<p class="card-text p-y-1">Some quick example text to build on the card title .</p>
-							<a href="#" class="card-link">link</a>
-							<a href="#" class="card-link">Second link</a>
-						</div>
-					</div>
-				</div>
-			</div><br>
-			<div class="row">
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
-							<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-							<p class="card-text p-y-1">Some quick example text to build on the card title .</p>
-							<a href="#" class="card-link">link</a>
-							<a href="#" class="card-link">Second link</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
-							<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-							<p class="card-text p-y-1">Some quick example text to build on the card title .</p>
-							<a href="#" class="card-link">link</a>
-							<a href="#" class="card-link">Second link</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card">
-						<div class="card-block">
-							<h4 class="card-title">Card title</h4>
-							<h6 class="card-subtitle text-muted">Support card subtitle</h6>
-							<p class="card-text p-y-1">Some quick example text to build on the card title .</p>
-							<a href="#" class="card-link">link</a>
-							<a href="#" class="card-link">Second link</a>
-						</div>
-					</div>
-				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>
+
+	{# section listeSpa  #}
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Nom de l'association</th>
+				<th scope="col">Nombre d'annonces à pourvoir
+				</th>
+				<th scope="col">Nombre d'annonces pourvues</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for spa in spas %}
+				<tr>
+					<th scope="row"></th>
+					<td>{{spa.nomAssociation }}</td>
+					<td>{{spa.nombreAnnonceApourvoir}}</td>
+					<td>{{spa.nombreAnnoncePourvues }}</td>
+					{# <td>{{annonce.DateDeMiseAjour|date('Y-m-d') }}</td> #}
+				</tr>
+
+			{% endfor %}
+
+		</tbody>
+	</table>
 
 
 {% endblock %}
