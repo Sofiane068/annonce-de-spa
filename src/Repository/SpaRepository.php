@@ -45,22 +45,20 @@ class SpaRepository extends ServiceEntityRepository
         }
     }
 
+
     // /**
     //  * @return Spa[] Returns an array of Spa objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function search()
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->leftJoin('s.annonce ', 'a')
+            ->orderBy('a.DateDeMiseAjour', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Spa

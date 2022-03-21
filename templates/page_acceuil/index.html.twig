@@ -45,5 +45,32 @@
 		</div>
 	</div>
 
+	{# section listeSpa  #}
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Nom de l'association</th>
+				<th scope="col">Nombre d'annonces à pourvoir
+				</th>
+				<th scope="col">Nombre d'annonces pourvues</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for spa in spas %}
+				<tr>
+					<th scope="row"></th>
+					<td>{{spa.nomAssociation }}</td>
+					<td>{{spa.nombreAnnonceApourvoir}}</td>
+					<td>{{spa.nombreAnnoncePourvues }}</td>
+					{# <td>{{annonce.DateDeMiseAjour|date('Y-m-d') }}</td> #}
+				</tr>
+
+			{% endfor %}
+
+		</tbody>
+	</table>
+
 
 {% endblock %}
