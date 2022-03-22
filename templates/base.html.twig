@@ -26,7 +26,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_page_contact') }}">Contact</a>
+							<a class="nav-link" href="{{ path('app_page_contact') }}">Contact</a>
 
 
 						</li>
@@ -45,11 +45,12 @@
 							<a class="nav-link disabled" href="#">Disabled</a>
 						</li>
 					</ul>
-					<a id="login" href="{{ path('app_page_inscription') }}" class="btn btn-outline my-2 my-sm-0">inscription</a>
-					<a id="connexion" href="{{ path('app_login') }}" class="btn btn my-2 my-sm-0 btn-group-toggle">Connexion</a>
-
-
-
+					{% if not is_granted('ROLE_USER') %}
+						<a id="login" href="{{ path('app_page_inscription') }}" class="btn btn-outline my-2 my-sm-0">inscription</a>
+						<a id="connexion" href="{{ path('app_login') }}" class="btn btn my-2 my-sm-0 btn-group-toggle">Connexion</a>
+						{% else %}
+						{# bouton logout #}
+					{% endif %}
 
 				</div>
 			</nav>
@@ -68,3 +69,4 @@
 			<script src="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-alpha.6.min.js"></script>
 		</body>
 	</html>
+</body></html>
