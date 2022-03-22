@@ -35,6 +35,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank()]
     protected $motDePasse;
 
+    protected ?string $plainPassword = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -101,12 +103,24 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->getMotDePasse();
     }
 
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 }
