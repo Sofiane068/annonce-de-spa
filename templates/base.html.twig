@@ -49,6 +49,9 @@
 						<a id="login" href="{{ path('app_page_inscription') }}" class="btn btn-outline my-2 my-sm-0">inscription</a>
 						<a id="connexion" href="{{ path('app_login') }}" class="btn btn my-2 my-sm-0 btn-group-toggle">Connexion</a>
 						{% else %}
+						<a id="logout" style=" background-color: rgb(255, 150, 13); color: azure" href="{{ path('app_logout') }}" class="btn btn my-2 my-sm-0 btn-group-toggle">Deconnexion</a>
+
+
 						{# bouton logout #}
 					{% endif %}
 
